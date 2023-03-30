@@ -1,0 +1,165 @@
+package com.driver;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+@Repository
+public class OrderRepository {
+
+    HashMap<String,Order> orderDb = new HashMap<>();
+    HashMap<String,DeliveryPartner> deliveryPartnerDb = new HashMap<>();
+    HashMap<String,List<String>> orderPartnerDb = new HashMap<>();
+    HashSet<String> unAssignedOrder = new HashSet<>();
+
+    public void addOrder(Order order) {
+        //add in orderdb to get all orders
+        String key = order.getId();
+        orderDb.put(key, order);
+
+        //add in unassigned db to get orders which are not assigned
+        unAssignedOrder.add(key);
+    }
+    public void addPartner(String id)
+    {
+       deliveryPartnerDb.put(id,new DeliveryPartner(id));
+    }
+
+    public void addOrderPartner(String partnerId, String orderId)
+    {
+        //setting the number of orders in existing partner id
+        deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()+1);
+
+        //remove unassign orderid as its will be assign to a partner
+        unAssignedOrder.remove(orderId);
+
+
+        //list of oerder ids with their respective partner
+        if(orderPartnerDb.containsKey(partnerId))
+        {
+            orderPartnerDb.get(partnerId).add(orderId);
+        }
+        else
+        {
+            List<String> list = new ArrayList<>();
+            list.add(orderId);
+            orderPartnerDb.put(partnerId,list);
+        }
+
+    }
+
+    public Order getOrder(String id)
+    {
+        return orderDb.get(id);
+    }
+
+    public DeliveryPartner getPartner(String id)
+    {
+        return deliveryPartnerDb.get(id);
+    }
+
+    public List<String> getAllOrders()
+    {
+        List<String> list = new ArrayList<>();
+        for(String id:orderDb.keySet())
+        {
+            list.add(id);
+        }
+
+        return list;
+    }
+
+    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId)
+    {
+        int HH = Integer.parseInt(time.substring(0,2));
+        int MM = Integer.parseInt(time.substring(3));
+
+        int time1 = HH*60 + MM;
+
+        List<String> list = new ArrayList<>();
+
+        if(orderPartnerDb.containsKey(partnerId))
+        {
+            list = orderPartnerDb.get(partnerId);
+        }
+
+        for(String orderId : list)
+        {
+            //get expected time delivered order
+            int t = orderDb.get(orderId).getDeliveryTime();
+            if(t < time1)
+            {
+                orderDb.remove(orderId);
+                orderPartnerDb.get(partnerId).remove(orderId);
+               deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()-1);
+            }
+        }
+
+        return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
+    }
+
+    public String getLastDeliveryTimeByPartnerId(String partnerId)
+    {
+        List<String> list = new ArrayList<>();
+
+        if(orderPartnerDb.containsKey(partnerId))
+        {
+            list = orderPartnerDb.get(partnerId);
+        }
+
+        int max = Integer.MIN_VALUE;
+
+        for(String orderId : list)
+        {
+            int time = orderDb.get(orderId).getDeliveryTime();
+            max = Math.max(max, time);
+        }
+
+        String time = "";
+
+        int hh = max/60;
+        int mm = max - (hh*60);
+
+        String hour = String.valueOf(hh);
+        String min = String.valueOf(mm);
+
+        time = hour +":"+ min;
+
+        return time;
+
+    }
+
+    public void deletePartnerById(String id)
+    {
+        List<String> list = orderPartnerDb.get(id);
+        orderPartnerDb.remove(id);
+        deliveryPartnerDb.remove(id);
+
+        for(String orderId : list)
+        {
+            unAssignedOrder.add(orderId);
+        }
+    }
+
+    public void deleteOrderById(String id)
+    {
+        if(unAssignedOrder.contains(id))
+        {
+            unAssignedOrder.remove(id);
+        }
+        else
+        {
+            for(List<String> list : orderPartnerDb.values())
+            {
+                list.remove(id);
+            }
+        }
+
+        orderDb.remove(id);
+
+    }
+
+}
