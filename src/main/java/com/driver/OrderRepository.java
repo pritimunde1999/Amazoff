@@ -10,10 +10,17 @@ import java.util.List;
 @Repository
 public class OrderRepository {
 
-    HashMap<String,Order> orderDb = new HashMap<>();
-    HashMap<String,DeliveryPartner> deliveryPartnerDb = new HashMap<>();
-    HashMap<String,List<String>> orderPartnerDb = new HashMap<>();
-    HashSet<String> unAssignedOrder = new HashSet<>();
+    HashMap<String,Order> orderDb;
+    HashMap<String,DeliveryPartner> deliveryPartnerDb;
+    HashMap<String,List<String>> orderPartnerDb;
+    HashSet<String> unAssignedOrder;
+
+    public OrderRepository() {
+        this.orderDb = new HashMap<>();
+        this.deliveryPartnerDb = new HashMap<>();
+        this.orderPartnerDb = new HashMap<>();
+        this.unAssignedOrder = new HashSet<>();
+    }
 
     public void addOrder(Order order) {
         //add in orderdb to get all orders
