@@ -31,10 +31,16 @@ public class OrderRepository {
     public void addOrderPartner(String partnerId, String orderId)
     {
         //setting the number of orders in existing partner id
-        deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()+1);
+        if(deliveryPartnerDb.containsKey(partnerId))
+        {
+            deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()+1);
+        }
 
         //remove unassign orderid as its will be assign to a partner
-        unAssignedOrder.remove(orderId);
+        if(unAssignedOrder.contains(orderId))
+        {
+            unAssignedOrder.remove(orderId);
+        }
 
 
         //list of oerder ids with their respective partner
@@ -53,12 +59,20 @@ public class OrderRepository {
 
     public Order getOrder(String id)
     {
-        return orderDb.get(id);
+        if(orderDb.containsKey(id))
+        {
+            return orderDb.get(id);
+        }
+        return null;
     }
 
     public DeliveryPartner getPartner(String id)
     {
-        return deliveryPartnerDb.get(id);
+        if(deliveryPartnerDb.containsKey(id))
+        {
+            return deliveryPartnerDb.get(id);
+        }
+        return null;
     }
 
     public List<String> getAllOrders()
@@ -121,7 +135,7 @@ public class OrderRepository {
         String time = "";
 
         int hh = max/60;
-        int mm = max - (hh*60);
+        int mm = max%60;
 
         String hour = String.valueOf(hh);
         String min = String.valueOf(mm);
@@ -135,8 +149,15 @@ public class OrderRepository {
     public void deletePartnerById(String id)
     {
         List<String> list = orderPartnerDb.get(id);
-        orderPartnerDb.remove(id);
-        deliveryPartnerDb.remove(id);
+        if (orderPartnerDb.containsKey(id))
+        {
+            orderPartnerDb.remove(id);
+        }
+
+        if(deliveryPartnerDb.containsKey(id))
+        {
+            deliveryPartnerDb.remove(id);
+        }
 
         for(String orderId : list)
         {
