@@ -45,7 +45,7 @@ public class OrderController {
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId){
 
         Order order= null;
-        order = orderService.getOrder(orderId);
+        order = orderService.getOrderById(orderId);
         //order should be returned with an orderId.
 
         return new ResponseEntity<>(order, HttpStatus.CREATED);
@@ -55,7 +55,7 @@ public class OrderController {
     public ResponseEntity<DeliveryPartner> getPartnerById(@PathVariable String partnerId){
 
         DeliveryPartner deliveryPartner = null;
-        deliveryPartner = orderService.getPartner(partnerId);
+        deliveryPartner = orderService.getPartnerById(partnerId);
         //deliveryPartner should contain the value given by partnerId
 
         return new ResponseEntity<>(deliveryPartner, HttpStatus.CREATED);
@@ -65,7 +65,7 @@ public class OrderController {
     public ResponseEntity<Integer> getOrderCountByPartnerId(@PathVariable String partnerId){
 
         Integer orderCount = 0;
-        orderCount = orderService.getCount(partnerId);
+        orderCount = orderService.getOrderCountByPartnerId(partnerId);
         //orderCount should denote the orders given by a partner-id
 
         return new ResponseEntity<>(orderCount, HttpStatus.CREATED);
@@ -76,7 +76,7 @@ public class OrderController {
         List<String> orders = null;
 
         //orders should contain a list of orders by PartnerId
-        orders = orderService.getOrderByPartner(partnerId);
+        orders = orderService.getOrdersByPartnerId(partnerId);
         return new ResponseEntity<>(orders, HttpStatus.CREATED);
     }
 
