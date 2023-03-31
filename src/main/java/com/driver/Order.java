@@ -20,4 +20,8 @@ public class Order {
     }
 
     public int getDeliveryTime() {return deliveryTime;}
+
+    public void setDeliveryTime(int deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 }
