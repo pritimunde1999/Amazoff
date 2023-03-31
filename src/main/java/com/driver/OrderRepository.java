@@ -88,97 +88,97 @@ public class OrderRepository {
         return list;
     }
 
-    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId)
-    {
-        int HH = Integer.parseInt(time.substring(0,2));
-        int MM = Integer.parseInt(time.substring(3));
+//    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId)
+//    {
+//        int HH = Integer.parseInt(time.substring(0,2));
+//        int MM = Integer.parseInt(time.substring(3));
+//
+//        int time1 = HH*60 + MM;
+//
+//        List<String> list = new ArrayList<>();
+//
+//        if(orderPartnerDb.containsKey(partnerId))
+//        {
+//            list = orderPartnerDb.get(partnerId);
+//        }
+//
+//        for(String orderId : list)
+//        {
+//            //get expected time delivered order
+//            int t = orderDb.get(orderId).getDeliveryTime();
+//            if(t <= time1)
+//            {
+//                orderDb.remove(orderId);
+//                orderPartnerDb.get(partnerId).remove(orderId);
+//                deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()-1);
+//            }
+//        }
+//
+//        return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
+//    }
 
-        int time1 = HH*60 + MM;
+//    public String getLastDeliveryTimeByPartnerId(String partnerId)
+//    {
+//        List<String> list = new ArrayList<>();
+//
+//        if(orderPartnerDb.containsKey(partnerId))
+//        {
+//            list = orderPartnerDb.get(partnerId);
+//        }
+//
+//        int max = Integer.MIN_VALUE;
+//
+//        for(String orderId : list)
+//        {
+//            int time = orderDb.get(orderId).getDeliveryTime();
+//            max = Math.max(max, time);
+//        }
+//
+//        String time = "";
+//
+//        int hh = max/60;
+//        int mm = max%60;
+//
+//        String hour = String.valueOf(hh);
+//        String min = String.valueOf(mm);
+//
+//        if(hour.length()==1) hour = "0"+hour;
+//        if(min.length()==1) min ="0"+min;
+//
+//        time = hour +":"+ min;
+//
+//        return time;
+//
+//    }
 
-        List<String> list = new ArrayList<>();
+//    public void deletePartnerById(String id)
+//    {
+//        List<String> list = orderPartnerDb.get(id);
+//        for(String orderId : list)
+//        {
+//            unAssignedOrder.add(orderId);
+//        }
+//
+//            orderPartnerDb.remove(id);
+//            deliveryPartnerDb.remove(id);
+//    }
 
-        if(orderPartnerDb.containsKey(partnerId))
-        {
-            list = orderPartnerDb.get(partnerId);
-        }
-
-        for(String orderId : list)
-        {
-            //get expected time delivered order
-            int t = orderDb.get(orderId).getDeliveryTime();
-            if(t <= time1)
-            {
-                orderDb.remove(orderId);
-                orderPartnerDb.get(partnerId).remove(orderId);
-                deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()-1);
-            }
-        }
-
-        return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
-    }
-
-    public String getLastDeliveryTimeByPartnerId(String partnerId)
-    {
-        List<String> list = new ArrayList<>();
-
-        if(orderPartnerDb.containsKey(partnerId))
-        {
-            list = orderPartnerDb.get(partnerId);
-        }
-
-        int max = Integer.MIN_VALUE;
-
-        for(String orderId : list)
-        {
-            int time = orderDb.get(orderId).getDeliveryTime();
-            max = Math.max(max, time);
-        }
-
-        String time = "";
-
-        int hh = max/60;
-        int mm = max%60;
-
-        String hour = String.valueOf(hh);
-        String min = String.valueOf(mm);
-
-        if(hour.length()==1) hour = "0"+hour;
-        if(min.length()==1) min ="0"+min;
-
-        time = hour +":"+ min;
-
-        return time;
-
-    }
-
-    public void deletePartnerById(String id)
-    {
-        List<String> list = orderPartnerDb.get(id);
-        for(String orderId : list)
-        {
-            unAssignedOrder.add(orderId);
-        }
-
-            orderPartnerDb.remove(id);
-            deliveryPartnerDb.remove(id);
-    }
-
-    public void deleteOrderById(String id)
-    {
-        if(unAssignedOrder.contains(id))
-        {
-            unAssignedOrder.remove(id);
-        }
-        else
-        {
-            for(List<String> list : orderPartnerDb.values())
-            {
-                list.remove(id);
-            }
-        }
-
-        orderDb.remove(id);
-
-    }
+//    public void deleteOrderById(String id)
+//    {
+//        if(unAssignedOrder.contains(id))
+//        {
+//            unAssignedOrder.remove(id);
+//        }
+//        else
+//        {
+//            for(List<String> list : orderPartnerDb.values())
+//            {
+//                list.remove(id);
+//            }
+//        }
+//
+//        orderDb.remove(id);
+//
+//    }
 
 }

@@ -58,24 +58,24 @@ public class OrderService {
         return orderRepository.unAssignedOrder.size();
     }
 
-    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId)
-    {
-        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
-    }
-
-    public String getLastDeliveryTimeByPartnerId(String id)
-    {
-        return orderRepository.getLastDeliveryTimeByPartnerId(id);
-    }
-
-
-    public void deletePartnerById(String id)
-    {
-         orderRepository.deletePartnerById(id);
-    }
-
-    public void deleteOrderById(String id)
-    {
-        orderRepository.deleteOrderById(id);
-    }
+//    public int getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId)
+//    {
+//        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
+//    }
+//
+//    public String getLastDeliveryTimeByPartnerId(String id)
+//    {
+//        return orderRepository.getLastDeliveryTimeByPartnerId(id);
+//    }
+//
+//
+//    public void deletePartnerById(String id)
+//    {
+//         orderRepository.deletePartnerById(id);
+//    }
+//
+//    public void deleteOrderById(String id)
+//    {
+//        orderRepository.deleteOrderById(id);
+//    }
 }
