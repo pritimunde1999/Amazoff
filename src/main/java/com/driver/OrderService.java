@@ -44,7 +44,11 @@ public class OrderService {
 
     public List<String> getOrderByPartner(String id)
     {
-        return orderRepository.orderPartnerDb.get(id);
+        if(orderRepository.orderPartnerDb.containsKey(id))
+        {
+            return orderRepository.orderPartnerDb.get(id);
+        }
+        return null;
     }
 
     public List<String> getAllOrders()
