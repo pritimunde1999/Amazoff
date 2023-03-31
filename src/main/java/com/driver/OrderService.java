@@ -39,7 +39,7 @@ public class OrderService {
 
     public int getCount(String id)
     {
-        return orderRepository.deliveryPartnerDb.get(id).getNumberOfOrders();
+        return orderRepository.orderPartnerDb.get(id).size();
     }
 
     public List<String> getOrderByPartner(String id)
