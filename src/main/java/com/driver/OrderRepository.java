@@ -7,10 +7,10 @@ import java.util.*;
 @Repository
 public class OrderRepository {
 
-    public HashMap<String,Order> orderDb;
-    public HashMap<String,DeliveryPartner> deliveryPartnerDb;
-    public HashMap<String,List<String>> orderPartnerDb;
-    public Set<String> unAssignedOrder;
+    public HashMap<String,Order> orderDb = new HashMap<>();
+    public HashMap<String,DeliveryPartner> deliveryPartnerDb = new HashMap<>();
+    public HashMap<String,List<String>> orderPartnerDb = new HashMap<>();
+    public Set<String> unAssignedOrder = new HashSet<>();
 
 
 
