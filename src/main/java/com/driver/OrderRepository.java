@@ -151,21 +151,11 @@ public class OrderRepository {
     public void deletePartnerById(String id)
     {
 
-        List<String> list = orderPartnerDb.get(id);
-        for(String orderId : list)
-        {
-            unAssignedOrder.add(orderId);
+        if(!orderPartnerDb.isEmpty()){
+            unAssignedOrder.addAll(orderPartnerDb.get(id));
         }
-
-        if(orderPartnerDb.containsKey(id))
-        {
-            orderPartnerDb.remove(id);
-        }
-
-        if(deliveryPartnerDb.containsKey(id))
-        {
-            deliveryPartnerDb.remove(id);
-        }
+        orderPartnerDb.remove(id);
+        deliveryPartnerDb.remove(id);
     }
 
     public void deleteOrderById(String id) {
