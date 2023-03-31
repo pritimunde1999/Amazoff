@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("orders")
 public class OrderController {
 
+    OrderService orderServices=new OrderService();
 
-    OrderService orderServices = new OrderService();
 
     @PostMapping("/add-order")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
@@ -44,7 +44,7 @@ public class OrderController {
     @GetMapping("/get-order-by-id/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId){
 
-        Order order= orderServices.getOrder(orderId);
+        Order order= orderServices.getOrderById(orderId);
 
         //order should be returned with an orderId.
 
@@ -54,7 +54,7 @@ public class OrderController {
     @GetMapping("/get-partner-by-id/{partnerId}")
     public ResponseEntity<DeliveryPartner> getPartnerById(@PathVariable String partnerId){
 
-        DeliveryPartner deliveryPartner = orderServices.getPartner(partnerId);
+        DeliveryPartner deliveryPartner = orderServices.getPartnerById(partnerId);
 
         //deliveryPartner should contain the value given by partnerId
 
@@ -64,7 +64,7 @@ public class OrderController {
     @GetMapping("/get-order-count-by-partner-id/{partnerId}")
     public ResponseEntity<Integer> getOrderCountByPartnerId(@PathVariable String partnerId){
 
-        Integer orderCount = orderServices.getCount(partnerId);
+        Integer orderCount = orderServices.getOrderCountByPartnerId(partnerId);
 
         //orderCount should denote the orders given by a partner-id
 
@@ -73,7 +73,7 @@ public class OrderController {
 
     @GetMapping("/get-orders-by-partner-id/{partnerId}")
     public ResponseEntity<List<String>> getOrdersByPartnerId(@PathVariable String partnerId){
-        List<String> orders = orderServices.getOrderByPartner(partnerId);
+        List<String> orders = orderServices.getOrdersByPartnerId(partnerId);
 
         //orders should contain a list of orders by PartnerId
 
