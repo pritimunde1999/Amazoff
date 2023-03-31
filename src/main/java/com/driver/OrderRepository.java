@@ -26,7 +26,8 @@ public class OrderRepository {
     }
     public void addPartner(String id)
     {
-       deliveryPartnerDb.put(id,new DeliveryPartner(id));
+
+        deliveryPartnerDb.put(id,new DeliveryPartner(id));
     }
 
     public void addOrderPartner(String partnerId, String orderId)
@@ -105,11 +106,11 @@ public class OrderRepository {
         {
             //get expected time delivered order
             int t = orderDb.get(orderId).getDeliveryTime();
-            if(t < time1)
+            if(t <= time1)
             {
                 orderDb.remove(orderId);
                 orderPartnerDb.get(partnerId).remove(orderId);
-               deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()-1);
+                deliveryPartnerDb.get(partnerId).setNumberOfOrders(deliveryPartnerDb.get(partnerId).getNumberOfOrders()-1);
             }
         }
 
